@@ -1,0 +1,13 @@
+  @media(max-width: 600px){
+
+      h4{
+          /* text-align: center; */
+          margin-top: 20px;
+      }
+
+     a:link{
+         color: #ffffff;
+     }
+
+     
+  } 

@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar color="accent">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item (click)="onAddDonor()" ><mat-icon>home</mat-icon>Add Donor</a>
+      <a mat-list-item (click)="onDonor()"><mat-icon>settings</mat-icon>Donors</a>
+     
+      <!-- <a mat-list-item href="#products"> <mat-icon>shopping_cart</mat-icon> Products</a>
+      <a mat-list-item href="#about"> <mat-icon>group</mat-icon> About</a>
+      <a mat-list-item href="#team"> <mat-icon>groups</mat-icon> The Team</a>
+      <a mat-list-item href="#chat"> <mat-icon>chat</mat-icon>Chat Us</a> -->
+
+    
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="accent"  class="app-toolbar">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span><a routerLink="/dashboard"><img src="assets/logo13.png"> {{title}} </a></span>
+
+      <div class="spacer"></div>
+    
+   
+      <a mat-button routerLink=""><mat-icon>home</mat-icon> Profile</a>
+      <!-- <a mat-button href="#services"><mat-icon>settings</mat-icon>Services</a> -->
+    <!-- <a mat-button href="#products"><mat-icon>shopping_cart</mat-icon>Products</a>
+    <a mat-button href="#about"><mat-icon>group</mat-icon>About</a>
+    <a mat-button href="#team"> <mat-icon>groups</mat-icon> The Team</a>
+    <a mat-button href="#chat"><mat-icon>chat</mat-icon>Chat Us</a> -->
+    
+  
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <ng-content></ng-content>
+    <app-data-table *ngIf="showDonor"></app-data-table>
+    <app-add-donor *ngIf="showAddDonor"></app-add-donor>
+    
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
