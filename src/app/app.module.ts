@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +29,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AddDonorComponent } from './add-donor/add-donor.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignInComponent } from './welcome/sign-in/sign-in.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { Covid19Component } from './covid19/covid19.component';
+// import { SearchfilterPipe } from './searchfilter.pipe';
+
+
 
 
 
@@ -40,6 +47,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     DataTableComponent,
     WelcomeComponent,
     AddDonorComponent,
+    SignInComponent,
+    Covid19Component,
+    // SearchfilterPipe,
+  
    
    
     
@@ -71,7 +82,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     MatSortModule,
     FlexLayoutModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

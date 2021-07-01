@@ -3,11 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
+import { ApiServicesService } from '../api-services.service';
 
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
   id: number;
-  date: number;
+  date: string;
   name: string;
   hb: string;
   gender: string;
@@ -17,44 +18,61 @@ export interface DataTableItem {
   location: string;
   phone: string;
   patientName: string;
-  expiryDate: number;
+  expiryDate: string;
+
+  
   
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: DataTableItem[] = [
-  {id: 1, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 2, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 3, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 4, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 5, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 6, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 7, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 8, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 9, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 10, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 11, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 12, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 13, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 14, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 15, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 1, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 2, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 3, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 4, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 5, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 6, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 7, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 8, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 9, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 10, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 11, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 12, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 13, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 14, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
-  {id: 15, date: 20/10/2021, name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: 20/10/2021 },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 1, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  {id: 2, date: '20/10/2021', name: 'Hydrogen', hb: '30g/dl', gender: 'Male', age: 26, bloodGroup: 'A', serial: 1234, location: 'Accra', phone: '0247154259', patientName: 'Kojo', expiryDate: '20/10/2021' },
+  
 
 ];
+
+// const EXAMPLE_DATA: DataTableItem[] =[
+
+// ];
 
 /**
  * Data source for the DataTable view. This class should
@@ -116,8 +134,8 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        // case 'name': return compare(a.name, b.name, isAsc);
+        // case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }
     });
@@ -127,4 +145,9 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a: string | number, b: string | number, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+
+
+
+
+
 }

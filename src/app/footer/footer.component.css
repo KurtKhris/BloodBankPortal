@@ -1,13 +1,14 @@
-  @media(max-width: 600px){
-
-      h4{
-          /* text-align: center; */
-          margin-top: 20px;
-      }
-
-     a:link{
-         color: #ffffff;
-     }
-
-     
-  } 
+.app-toolbar {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+    margin-top: 233%;
+  }
+  span {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
+    font-size: 11px;
+  }

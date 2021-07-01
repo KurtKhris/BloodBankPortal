@@ -1,33 +1,32 @@
-<!-- <div class="header">
-    <h1>Welcome to Volta Regional Hospital Blood Bank Portal</h1>
-</div> -->
-
-
 <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
     
-    <mat-card>
-        <mat-card-title>Welcome to Volta Regional Hospital Blood Bank Portal</mat-card-title>
-        <img align="center" width="230px" src="/assets/blood.png">
+    <mat-card class="box " >
+        <mat-card-title align="center"> Blood Bank Portal</mat-card-title><br>
+        <img align="center" width="230px" height="210px" src="/assets/blood.png">
     </mat-card>
-&nbsp; &nbsp;
-    <mat-card class="box">
+<!-- &nbsp; &nbsp; -->
+    <mat-card class="box" >
       <mat-card-header>
+
         <mat-card-title>Sign In</mat-card-title>
       </mat-card-header>
   
-      <form class="example-form">
+      <form [formGroup]="userEmails" class="example-form">
         <mat-card-content>
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Username">
+            <input matInput type="email" formControlName="primaryEmail"  placeholder="Email" required >
           </mat-form-field> 
 
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" required >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
           </mat-form-field>
         </mat-card-content>
-<a routerLink="/dashboard" ><button mat-stroked-button color="accent" class="btn-block">Sign-in</button></a>
-<br><br>
-<p>Don't have access? <a href="#">Register</a> </p>
+        <a routerLink="/dashboard" ><button mat-stroked-button color="accent" class="btn-block"><mat-icon>login</mat-icon> Sign-in</button></a>
+        <br><br>
+        <p>Don't have access? <a (click)="onRegister()" style="color: blue;" >Register</a> </p>
 
       </form>
     </mat-card>

@@ -4,15 +4,15 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar color="accent">Menu</mat-toolbar>
+    <mat-toolbar color="">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item (click)="onAddDonor()" ><mat-icon>home</mat-icon>Add Donor</a>
-      <a mat-list-item (click)="onDonor()"><mat-icon>settings</mat-icon>Donors</a>
-     
-      <!-- <a mat-list-item href="#products"> <mat-icon>shopping_cart</mat-icon> Products</a>
-      <a mat-list-item href="#about"> <mat-icon>group</mat-icon> About</a>
-      <a mat-list-item href="#team"> <mat-icon>groups</mat-icon> The Team</a>
-      <a mat-list-item href="#chat"> <mat-icon>chat</mat-icon>Chat Us</a> -->
+      <a mat-list-item (click)="onAddDonor()" ><mat-icon>person_add</mat-icon>Add Donor</a>
+      <a mat-list-item (click)="onDonor()"><mat-icon>groups</mat-icon>Donors</a>
+      <a mat-list-item (click)="onDueDonor()"><mat-icon>today</mat-icon>Due Donors</a>
+      <!-- <a mat-list-item (click)="onMyAccount()" ><mat-icon>account_circle</mat-icon>My Account</a> -->
+      <!-- <a mat-list-item (click)="onResetPassword()"><mat-icon>settings_backup_restore</mat-icon>Reset Password</a> -->
+      <a mat-list-item routerLink=""><mat-icon>power_settings_new</mat-icon>Logout</a>
+      <app-footer></app-footer>
 
     
 
@@ -28,17 +28,14 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span><a routerLink="/dashboard"><img src="assets/logo13.png"> {{title}} </a></span>
+      <span><a routerLink="/dashboard"><img src="assets/blood.png"> </a>{{title}} </span>
 
       <div class="spacer"></div>
     
-   
-      <a mat-button routerLink=""><mat-icon>home</mat-icon> Profile</a>
-      <!-- <a mat-button href="#services"><mat-icon>settings</mat-icon>Services</a> -->
-    <!-- <a mat-button href="#products"><mat-icon>shopping_cart</mat-icon>Products</a>
-    <a mat-button href="#about"><mat-icon>group</mat-icon>About</a>
-    <a mat-button href="#team"> <mat-icon>groups</mat-icon> The Team</a>
-    <a mat-button href="#chat"><mat-icon>chat</mat-icon>Chat Us</a> -->
+       <button mat-button><mat-icon>account_circle</mat-icon>Profile</button>
+      
+     
+      
     
   
     </mat-toolbar>
@@ -46,7 +43,9 @@
     <ng-content></ng-content>
     <app-data-table *ngIf="showDonor"></app-data-table>
     <app-add-donor *ngIf="showAddDonor"></app-add-donor>
-    
+    <app-covid19 *ngIf="showDueDonor"></app-covid19>
+    <!-- <app-footer></app-footer> -->
   </mat-sidenav-content>
+  
 </mat-sidenav-container>
-
+ 

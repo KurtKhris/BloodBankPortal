@@ -1,4 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SignInComponent } from './sign-in/sign-in.component';
+import {FormControl, Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-welcome',
@@ -6,15 +9,26 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
-  @Output() dataTable = new EventEmitter;
+  hide = true;
 
-  constructor() { }
+  animalControl = new FormControl('', Validators.required);
+  selectFormControl = new FormControl('', Validators.required);
+  selectFormControlEmail = new FormControl('', Validators.required);
+
+  userEmails = new FormGroup({primaryEmail: new FormControl('',[
+              Validators.required,
+              Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+            });
+
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-  DataT(){
-    this.dataTable.emit('app-root');
+  onRegister(){
+    this.dialog.open(SignInComponent);
   }
+
+
 
 }

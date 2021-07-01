@@ -9,9 +9,11 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./main-navbar.component.css']
 })
 export class MainNavbarComponent {
-  title = 'BLOOD BANK';
+  title = 'BLOOD BANK PORTAL';
   showDonor:boolean=false
   showAddDonor:boolean=true
+  showDueDonor:boolean=false
+ 
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -28,6 +30,7 @@ export class MainNavbarComponent {
 
   onAddDonor(){
     this.showDonor = false
+    this.showDueDonor = false
     this.showAddDonor = true
     
   }
@@ -35,6 +38,14 @@ export class MainNavbarComponent {
   onDonor(){
     this.showDonor = true
     this.showAddDonor = false
+    this.showDueDonor = false
   }
+
+  onDueDonor(){
+    this.showDonor = false
+    this.showAddDonor = false
+    this.showDueDonor = true
+  }
+
 
 }
